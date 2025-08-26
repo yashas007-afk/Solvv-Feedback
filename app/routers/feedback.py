@@ -45,7 +45,7 @@ def update_feedback(feedback_id: int, updated: schemas.FeedbackUpdate, db: Sessi
     if not db_feedback:
         raise FeedbackNotFoundError(feedback_id)
 
-    update_data = {k: v for k, v in updated.dict(exclude_unset=True).items()}
+    update_data = updated.model_dump(exclude_unset=True, exclude_none=True)
     for field_name, value in update_data.items():
         setattr(db_feedback, field_name, value)
 
